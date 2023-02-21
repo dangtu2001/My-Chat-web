@@ -94,7 +94,7 @@ const Sidebar = () => {
     }
 
     return (
-        <div className='h-screen min-w-[300px] max-w-[350px] border-r scrollbar-thin scrollbar-w-0 hover:scrollbar-w-2 scrollbar-thumb-gray-400 scrollbar-thumb-rounded-lg'>
+        <div className='h-screen w-[350px] border-r scrollbar-thin scrollbar-w-0 hover:scrollbar-w-2 scrollbar-thumb-gray-400 scrollbar-thumb-rounded-lg'>
             <div className='header flex sticky top-0 z-10 bg-white p-4 h-20 border-b justify-between'>
                 <Tooltip title={loggedInUser?.email as string} placement='right'>
                     <StyleUserAvata src={loggedInUser?.photoURL || ''} />

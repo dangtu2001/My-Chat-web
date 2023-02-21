@@ -7,12 +7,12 @@ import { GoogleAuthProvider, getAuth } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyAsmn9YirXmq95VaK4IA20ksr3ctbloc9g",
-    authDomain: "my-chat-app-2c070.firebaseapp.com",
-    projectId: "my-chat-app-2c070",
-    storageBucket: "my-chat-app-2c070.appspot.com",
-    messagingSenderId: "477413371358",
-    appId: "1:477413371358:web:e6dbd73fbc85a2f00f414f"
+    apiKey: process.env.NEXT_PUBLIC_APIKEY,
+    authDomain: process.env.NEXT_PUBLIC_AUTHDOMAIN,
+    projectId: process.env.NEXT_PUBLIC_PROJECTID,
+    storageBucket: process.env.NEXT_PUBLIC_STORAGEBUCKET,
+    messagingSenderId: process.env.NEXT_PUBLIC_MESSAGINGSENDERID,
+    appId: process.env.NEXT_PUBLIC_APPID,
 };
 
 // Initialize Firebase

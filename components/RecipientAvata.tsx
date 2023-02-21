@@ -1,8 +1,8 @@
 import { Avatar } from "@mui/material"
-import { userRecipient } from "../hooks/useRecipient"
+import { useRecipient } from "../hooks/useRecipient"
 import { useEffect, useState } from "react"
 
-type Props = ReturnType<typeof userRecipient>
+type Props = ReturnType<typeof useRecipient>
 
 const RecipientAvata = ({ recipient, recipientEmail }: Props) => {
 

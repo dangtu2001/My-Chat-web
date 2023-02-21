@@ -9,3 +9,11 @@ export interface AppUser {
     lastSeen: Timestamp;
     photoURL: string;
 }
+
+export interface IMessage {
+    id: string;
+    conversation_id: string;
+    text: string;
+    sent_at: string | null;
+    user: string;
+}

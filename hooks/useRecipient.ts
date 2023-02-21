@@ -5,7 +5,7 @@ import { AppUser, Conversation } from './../types/index';
 import { auth, db } from '../config/firebase';
 import { getRecipientEmail } from '../utils/getRecipientEmail';
 
-export const userRecipient = (conversationUsers: Conversation['users']) => {
+export const useRecipient = (conversationUsers: Conversation['users']) => {
     const [loggedInUser, _loading, _error] = useAuthState(auth)
 
     // get recipient email
