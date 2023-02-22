@@ -13,6 +13,8 @@ import Message from "./Message"
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon'
 import SendIcon from '@mui/icons-material/Send'
 import MicIcon from '@mui/icons-material/Mic'
+import data from '@emoji-mart/data'
+import Picker from '@emoji-mart/react'
 import { KeyboardEventHandler, MouseEventHandler, useRef, useState } from "react"
 import { addDoc, collection, doc, serverTimestamp, setDoc } from "firebase/firestore"
 
@@ -20,6 +22,9 @@ const ConversationScreen = ({ conversation, messages }: { conversation: Conversa
     const [newMessage, setNewMessage] = useState('')
 
     const [loggedInUser, _loading, _error] = useAuthState(auth)
+
+    const [showEmojiPicker, setShowEmojiPicker] = useState(false)
+
     const conversationUsers = conversation.users
 
     const { recipient, recipientEmail } = useRecipient(conversationUsers)
@@ -92,6 +97,19 @@ const ConversationScreen = ({ conversation, messages }: { conversation: Conversa
         endOfMessagesRef.current?.scrollIntoView({ behavior: 'smooth' })
     }
 
+    const handleShowEmojis: MouseEventHandler<HTMLButtonElement> = event => {
+        event.preventDefault()
+        setShowEmojiPicker(!showEmojiPicker)
+    }
+
+    const addRmojisToChatInput = (emojis: any) => {
+        let sym = emojis?.unified?.split("-");
+        let codesArray: any[] = [];
+        sym.forEach((el: any) => codesArray.push("0x" + el));
+        let emoji = String.fromCodePoint(...codesArray);
+        setNewMessage(newMessage + emoji);
+    }
+
     return (
         <>
             <div className="sticky bg-white z-20 top-0 flex items-center p-3 h-20 border-b">
@@ -116,7 +134,12 @@ const ConversationScreen = ({ conversation, messages }: { conversation: Conversa
             </div>
             {/* enter new message */}
             <form className="flex items-center p-[10px] sticky bottom-0 bg-white z-20">
-                <InsertEmoticonIcon />
+                <IconButton onClick={handleShowEmojis}>
+                    <InsertEmoticonIcon />
+                </IconButton>
+                {showEmojiPicker && <div className="absolute bottom-20">
+                    <Picker data={data} onEmojiSelect={addRmojisToChatInput} />
+                </div>}
                 <input type="text"
                     className="grow outline-none border-none rounded-xl bg-[#f5f5f5] p-4 ml-4 mr-4"
                     value={newMessage} onChange={event => setNewMessage(event.target.value)}
