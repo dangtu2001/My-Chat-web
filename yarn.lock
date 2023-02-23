@@ -3111,7 +3111,7 @@
   "resolved" "https://registry.npmjs.org/quick-lru/-/quick-lru-5.1.1.tgz"
   "version" "5.1.1"
 
-"react-dom@^17.0.0 || ^18.0.0", "react-dom@^18.2.0", "react-dom@>= 16.8.0", "react-dom@>=16.6.0", "react-dom@>=17.0.x", "react-dom@18.2.0":
+"react-dom@^17.0.0 || ^18.0.0", "react-dom@^18.2.0", "react-dom@>= 16.8.0", "react-dom@>=16.6.0", "react-dom@>=16.8.0", "react-dom@>=17.0.x", "react-dom@18.2.0":
   "integrity" "sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g=="
   "resolved" "https://registry.npmjs.org/react-dom/-/react-dom-18.2.0.tgz"
   "version" "18.2.0"
@@ -3323,6 +3323,16 @@
   "integrity" "sha512-LbrmJOMUSdEVxIKvdcJzQC+nQhe8FUZQTXQy6+I75skNgn3OoQ0DZA8YnFa7gp8tqtL3KPf1kmo0R5DoApeSGQ=="
   "resolved" "https://registry.npmjs.org/source-map/-/source-map-0.5.7.tgz"
   "version" "0.5.7"
+
+"stipop-react-sdk@^1.2.6-beta.1":
+  "integrity" "sha512-Ut/jI7Z+V9RxojWL2SOUhNddTItiD0FPXhIm0vUSgF8dF+6GDyfaSXu0T6ahxaJbHvL0S10dDxCtu+D2IPE6YQ=="
+  "resolved" "https://registry.npmjs.org/stipop-react-sdk/-/stipop-react-sdk-1.2.6-beta.1.tgz"
+  "version" "1.2.6-beta.1"
+
+"stipop-sdk-test@^1.1.19":
+  "integrity" "sha512-9ZgiiHPvbCvcx13BUgl1AWdJe/Dgw9C7Vf+wIgBj760eFtu2+6IduonIR+7hqg/cV2yHc9s41jBJ8JPMB0ywow=="
+  "resolved" "https://registry.npmjs.org/stipop-sdk-test/-/stipop-sdk-test-1.1.19.tgz"
+  "version" "1.1.19"
 
 "string-width@^4.1.0", "string-width@^4.2.0":
   "integrity" "sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g=="

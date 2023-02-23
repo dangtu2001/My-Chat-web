@@ -32,6 +32,8 @@
     "react-dom": "18.2.0",
     "react-firebase-hooks": "^5.1.1",
     "react-input-emoji": "^4.3.0",
+    "stipop-react-sdk": "^1.2.6-beta.1",
+    "stipop-sdk-test": "^1.1.19",
     "styled-components": "^5.3.6",
     "tailwind-scrollbar": "^2.1.0",
     "tailwindcss": "^3.2.4",

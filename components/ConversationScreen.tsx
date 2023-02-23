@@ -13,10 +13,19 @@ import Message from "./Message"
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon'
 import SendIcon from '@mui/icons-material/Send'
 import MicIcon from '@mui/icons-material/Mic'
+import FaceRetouchingNaturalIcon from '@mui/icons-material/FaceRetouchingNatural';
 import data from '@emoji-mart/data'
 import Picker from '@emoji-mart/react'
 import { KeyboardEventHandler, MouseEventHandler, useEffect, useRef, useState } from "react"
 import { addDoc, collection, doc, serverTimestamp, setDoc } from "firebase/firestore"
+// import { PickerComponent } from 'stipop-react-sdk'
+import dynamic from 'next/dynamic'
+
+const PickerComponent = dynamic(
+    () => import('stipop-react-sdk/dist/PickerComponent'),
+    {
+        ssr: false,
+    })
 
 const ConversationScreen = ({ conversation, messages }: { conversation: Conversation, messages: IMessage[] }) => {
     const [newMessage, setNewMessage] = useState('')
@@ -24,6 +33,7 @@ const ConversationScreen = ({ conversation, messages }: { conversation: Conversa
     const [loggedInUser, _loading, _error] = useAuthState(auth)
 
     const [showEmojiPicker, setShowEmojiPicker] = useState(false)
+    const [showStickerPicker, setShowStickerPicker] = useState(false)
 
     const conversationUsers = conversation.users
 
@@ -31,6 +41,8 @@ const ConversationScreen = ({ conversation, messages }: { conversation: Conversa
 
     const router = useRouter()
     const conversationId = router.query.id
+
+    const stickerRef = useRef<HTMLDivElement>(null)
 
 
     const queryGetMessages = generateQueryGetMessages(conversationId as string)
@@ -41,6 +53,21 @@ const ConversationScreen = ({ conversation, messages }: { conversation: Conversa
         scrollToBottom()
     }, [conversationId])
 
+    useEffect(() => {
+        function handleClickOutside(event:any) {
+          if (stickerRef.current && !stickerRef.current.contains(event.target)) {
+            setShowStickerPicker(false)
+          }
+        }
+    
+        // Bind the event listener
+        document.addEventListener('mousedown', handleClickOutside);
+    
+        // Unbind the event listener on cleanup
+        return () => {
+          document.removeEventListener('mousedown', handleClickOutside);
+        };
+      }, [stickerRef]);
 
     const showMessages = () => {
         // If front-end is loading messages behind the scenes, display messages retrived from Next SSR
@@ -73,10 +100,32 @@ const ConversationScreen = ({ conversation, messages }: { conversation: Conversa
             sent_at: serverTimestamp(),
             text: newMessage,
             user: loggedInUser?.email,
+            sticker: ''
         })
 
         // reset input field
         setNewMessage('')
+        // scroll to bottom
+        scrollToBottom()
+    }
+
+    const addStickerToDbAndUpdateLassSeen = async (sticker: any) => {
+        // update last seen in 'users' collection
+        await setDoc(doc(db, 'users', loggedInUser?.uid as string), {
+            lastSeen: serverTimestamp(),
+        }, { merge: true })
+        // just update what is changed
+        // add new message to 'messages' collection
+        await addDoc(collection(db, 'messages'), {
+            conversation_id: conversationId,
+            sent_at: serverTimestamp(),
+            text: '',
+            user: loggedInUser?.email,
+            sticker: sticker
+        })
+
+        // reset sticker field
+        // setSticker('')
         // scroll to bottom
         scrollToBottom()
     }
@@ -104,6 +153,11 @@ const ConversationScreen = ({ conversation, messages }: { conversation: Conversa
     const handleShowEmojis: MouseEventHandler<HTMLButtonElement> = event => {
         event.stopPropagation()
         setShowEmojiPicker(!showEmojiPicker)
+    }
+
+    const handleShowStickers: MouseEventHandler<HTMLButtonElement> = event => {
+        event.stopPropagation()
+        setShowStickerPicker(!showStickerPicker)
     }
 
     const addRmojisToChatInput = (emojis: any) => {
@@ -143,6 +197,23 @@ const ConversationScreen = ({ conversation, messages }: { conversation: Conversa
                 </IconButton>
                 {showEmojiPicker && <div className="absolute bottom-20">
                     <Picker data={data} onEmojiSelect={addRmojisToChatInput} locale='vi' onClickOutside={() => { setShowEmojiPicker(false) }} />
+                </div>}
+                <IconButton onClick={handleShowStickers}>
+                    <FaceRetouchingNaturalIcon />
+                </IconButton>
+                {showStickerPicker && <div ref={stickerRef} className="absolute bottom-20">
+                    <PickerComponent
+                        params={{
+                            apikey: '80d536bac9feef6570920372556fe027',
+                            userId: loggedInUser?.uid as string,
+                        }}
+                        stickerClick={(url: any) => {
+                            // setSticker(url.url)
+                            // if (!sticker) return
+                            addStickerToDbAndUpdateLassSeen(url.url)
+                        }}
+                        storeClick={(e:any) => console.log(e)}
+                    />
                 </div>}
                 <input type="text"
                     className="grow outline-none border-none rounded-xl bg-[#f5f5f5] p-4 ml-4 mr-4"
