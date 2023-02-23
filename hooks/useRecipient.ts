@@ -12,7 +12,7 @@ export const useRecipient = (conversationUsers: Conversation['users']) => {
     const recipientEmail = getRecipientEmail(conversationUsers, loggedInUser)
 
     // get recipient avata
-    const queryGetRecipient = query(collection(db, 'users'), where('email', '==', 'dangtu07122001@gmail.com'))
+    const queryGetRecipient = query(collection(db, 'users'), where('email', '==', recipientEmail as string))
 
     const [recipientsSnapshort, __loading, __error] = useCollection(queryGetRecipient)
 

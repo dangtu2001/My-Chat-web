@@ -15,7 +15,7 @@ import SendIcon from '@mui/icons-material/Send'
 import MicIcon from '@mui/icons-material/Mic'
 import data from '@emoji-mart/data'
 import Picker from '@emoji-mart/react'
-import { KeyboardEventHandler, MouseEventHandler, useRef, useState } from "react"
+import { KeyboardEventHandler, MouseEventHandler, useEffect, useRef, useState } from "react"
 import { addDoc, collection, doc, serverTimestamp, setDoc } from "firebase/firestore"
 
 const ConversationScreen = ({ conversation, messages }: { conversation: Conversation, messages: IMessage[] }) => {
@@ -36,6 +36,10 @@ const ConversationScreen = ({ conversation, messages }: { conversation: Conversa
     const queryGetMessages = generateQueryGetMessages(conversationId as string)
 
     const [messagesSnapshot, messagesLoading, __error] = useCollection(queryGetMessages)
+
+    useEffect(() => {
+        scrollToBottom()
+    }, [conversationId])
 
 
     const showMessages = () => {
@@ -98,7 +102,7 @@ const ConversationScreen = ({ conversation, messages }: { conversation: Conversa
     }
 
     const handleShowEmojis: MouseEventHandler<HTMLButtonElement> = event => {
-        event.preventDefault()
+        event.stopPropagation()
         setShowEmojiPicker(!showEmojiPicker)
     }
 
@@ -138,7 +142,7 @@ const ConversationScreen = ({ conversation, messages }: { conversation: Conversa
                     <InsertEmoticonIcon />
                 </IconButton>
                 {showEmojiPicker && <div className="absolute bottom-20">
-                    <Picker data={data} onEmojiSelect={addRmojisToChatInput} />
+                    <Picker data={data} onEmojiSelect={addRmojisToChatInput} locale='vi' onClickOutside={() => { setShowEmojiPicker(false) }} />
                 </div>}
                 <input type="text"
                     className="grow outline-none border-none rounded-xl bg-[#f5f5f5] p-4 ml-4 mr-4"
