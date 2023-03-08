@@ -18,11 +18,10 @@ import data from '@emoji-mart/data'
 import Picker from '@emoji-mart/react'
 import { KeyboardEventHandler, MouseEventHandler, useEffect, useRef, useState } from "react"
 import { addDoc, collection, doc, serverTimestamp, setDoc } from "firebase/firestore"
-// import { PickerComponent } from 'stipop-react-sdk'
 import dynamic from 'next/dynamic'
 
-const PickerComponent = dynamic(
-    () => import('stipop-react-sdk/dist/PickerComponent'),
+const MyPickerComponent = dynamic(
+    () => import('./MyPickerComponent'),
     {
         ssr: false,
     })
@@ -109,26 +108,26 @@ const ConversationScreen = ({ conversation, messages }: { conversation: Conversa
         scrollToBottom()
     }
 
-    const addStickerToDbAndUpdateLassSeen = async (sticker: any) => {
-        // update last seen in 'users' collection
-        await setDoc(doc(db, 'users', loggedInUser?.uid as string), {
-            lastSeen: serverTimestamp(),
-        }, { merge: true })
-        // just update what is changed
-        // add new message to 'messages' collection
-        await addDoc(collection(db, 'messages'), {
-            conversation_id: conversationId,
-            sent_at: serverTimestamp(),
-            text: '',
-            user: loggedInUser?.email,
-            sticker: sticker
-        })
+    // const addStickerToDbAndUpdateLassSeen = async (sticker: any) => {
+    //     // update last seen in 'users' collection
+    //     await setDoc(doc(db, 'users', loggedInUser?.uid as string), {
+    //         lastSeen: serverTimestamp(),
+    //     }, { merge: true })
+    //     // just update what is changed
+    //     // add new message to 'messages' collection
+    //     await addDoc(collection(db, 'messages'), {
+    //         conversation_id: conversationId,
+    //         sent_at: serverTimestamp(),
+    //         text: '',
+    //         user: loggedInUser?.email,
+    //         sticker: sticker
+    //     })
 
-        // reset sticker field
-        // setSticker('')
-        // scroll to bottom
-        scrollToBottom()
-    }
+    //     // reset sticker field
+    //     // setSticker('')
+    //     // scroll to bottom
+    //     scrollToBottom()
+    // }
 
     const sendMessageOnEnter: KeyboardEventHandler<HTMLInputElement> = event => {
         if (event.key === 'Enter') {
@@ -202,17 +201,9 @@ const ConversationScreen = ({ conversation, messages }: { conversation: Conversa
                     <FaceRetouchingNaturalIcon />
                 </IconButton>
                 {showStickerPicker && <div ref={stickerRef} className="absolute bottom-20">
-                    <PickerComponent
-                        params={{
-                            apikey: '80d536bac9feef6570920372556fe027',
-                            userId: loggedInUser?.uid as string,
-                        }}
-                        stickerClick={(url: any) => {
-                            // setSticker(url.url)
-                            // if (!sticker) return
-                            addStickerToDbAndUpdateLassSeen(url.url)
-                        }}
-                        storeClick={(e:any) => console.log(e)}
+                    <MyPickerComponent 
+                        scrollToBottom={scrollToBottom}
+                        conversationId={conversationId}
                     />
                 </div>}
                 <input type="text"
