@@ -19,7 +19,7 @@ const Message = ({ message }: { message: IMessage }) => {
         </div> :
         <div className="w-fit break-all max-w-[70%] min-w-[30%] p-5 rounded-lg m-[10px] relative bg-[#f5f5f5]">
           {message.sticker ?
-            <Image unoptimized={true} src={message.sticker} alt="message-image" width={500} height={500} />
+            <Image unoptimized={true} src={message.sticker} alt="message-image" width={100} height={100} />
             : message.text}
           <span className="text-gray-500 p-[10px] text-xs absolute bottom-[-5px] right-0 text-right">
             {message.sent_at}
