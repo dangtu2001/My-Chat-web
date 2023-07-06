@@ -10,7 +10,9 @@ Start a new conversation by emial address:
 
 Chat with friend:
 ![image](https://github.com/dangtu2001/My-Chat-web/assets/76527907/7f1f81ff-53a9-46d7-9149-00de84ba109d)
+
 Emoji:
 ![image](https://github.com/dangtu2001/My-Chat-web/assets/76527907/2deb6559-37f3-4338-840e-5604afc355b5)
+
 Stickers:
 ![image](https://github.com/dangtu2001/My-Chat-web/assets/76527907/b458fa00-7df8-4fed-80f6-10d98a23ca47)
