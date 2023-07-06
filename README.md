@@ -2,9 +2,11 @@
 
 <h2>Description</h2>
 The website provides real-time chat functionality with friends, featuring a diverse collection of emojis and stickers.
-Technologies used: \n
-- Frontend: Next.js, tailwindcss \n
-- Backend, database: Firebase \n
+Technologies used: 
+
+- Frontend: Next.js, tailwindcss
+
+- Backend, database: Firebase 
 
 <h2>Screenshots</h2>
 
