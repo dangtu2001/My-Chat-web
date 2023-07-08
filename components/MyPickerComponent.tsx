@@ -10,6 +10,8 @@ const MyPickerComponent = (props: {scrollToBottom: () => void, conversationId:st
 
   const [showStore, setShowStore] = useState(false)
 
+  const stickerKey = process.env.NEXT_PUBLIC_STICKER_APIKEY as string
+
   const addStickerToDbAndUpdateLassSeen = async (sticker: any) => {
     // update last seen in 'users' collection
     await setDoc(doc(db, 'users', loggedInUser?.uid as string), {
@@ -35,7 +37,7 @@ const MyPickerComponent = (props: {scrollToBottom: () => void, conversationId:st
     showStore ? 
     <StoreComponent
     params={{
-      apikey: process.env.STICKER_API_KEY as string,
+      apikey: stickerKey,
       userId: loggedInUser?.uid as string,
     }}
     downloadParams={{
@@ -46,7 +48,7 @@ const MyPickerComponent = (props: {scrollToBottom: () => void, conversationId:st
     :  
     <PickerComponent
       params={{
-          apikey: process.env.STICKER_API_KEY as string,
+          apikey: stickerKey,
           userId: loggedInUser?.uid as string,
       }}
       stickerClick={(url: any) => {
