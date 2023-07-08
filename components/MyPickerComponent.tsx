@@ -35,7 +35,7 @@ const MyPickerComponent = (props: {scrollToBottom: () => void, conversationId:st
     showStore ? 
     <StoreComponent
     params={{
-      apikey: '80d536bac9feef6570920372556fe027',
+      apikey: process.env.STICKER_API_KEY as string,
       userId: loggedInUser?.uid as string,
     }}
     downloadParams={{
@@ -46,7 +46,7 @@ const MyPickerComponent = (props: {scrollToBottom: () => void, conversationId:st
     :  
     <PickerComponent
       params={{
-          apikey: '80d536bac9feef6570920372556fe027',
+          apikey: process.env.STICKER_API_KEY as string,
           userId: loggedInUser?.uid as string,
       }}
       stickerClick={(url: any) => {
